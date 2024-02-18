@@ -1,14 +1,20 @@
 [tool.poetry]
-name = "backend"
+name = "api"
 version = "0.1.0"
 description = ""
 authors = []
-readme = "README.md"
+readme = "../README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9.16"
 fastapi = "^0.94.1"
 mangum = "^0.17.0"
+python-multipart = "0.0.9"
+python-dotenv = "1.0.1"
+roboflow = "1.1.19"
+uvicorn = "^0.21.1"
+google-cloud-storage = "2.14.0"
+opencv-python = "^4.9.0.80"
 
 [tool.poetry.group.development.dependencies]
 uvicorn = "^0.21.1"
