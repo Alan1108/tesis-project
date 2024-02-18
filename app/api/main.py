@@ -14,7 +14,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.router.get("/", status_code=200)
+async def health_check():
+    return {"msg": "Backend is working propperly"}
+
 app.include_router(tag.router, prefix="/tag")
 app.include_router(email.router, prefix="/email")
+
 
 handler = Mangum(app)
