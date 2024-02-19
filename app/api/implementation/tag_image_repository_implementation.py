@@ -3,6 +3,7 @@ from api.constants.constants import ClassColors
 import cv2
 import os
 import numpy as np
+import base64
 from http import HTTPStatus
 from typing import List, Dict
 from google.cloud import storage
@@ -39,7 +40,8 @@ class TagImageRepository(ITagImageRepository):
                 prediction_data=prediction_data["predictions"],
                 image=image
             )
-            return cleaned_data, new_image
+            image_base64 = base64.b64encode(new_image)
+            return cleaned_data, image_base64
         except Exception as ex:
             raise HTTPException(
                 status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
