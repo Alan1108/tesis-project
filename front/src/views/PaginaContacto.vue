@@ -52,8 +52,8 @@
                 </table>
                 <h2>¿Con quién deseas contactarte?</h2>
                 <div class="radio-options">
-                  <label><input type="radio" value="Desarrollo" v-model="departamento"> Departamento de Desarrollo</label><br>
-                  <label><input type="radio" value="Biotecnología" v-model="departamento"> Departamento de Biotecnología</label>
+                  <label><input type="radio" value="Desarrollo" v-model="departamento">Departamento de Desarrollo</label><br>
+                  <label><input type="radio" value="Biotecnología" v-model="departamento">Departamento de Biotecnología</label>
                 </div>
 
                 <div class="boton-enviar">
@@ -96,8 +96,40 @@ export default {
   },
   methods: {
     submitForm() {
-      // Aquí puedes manejar el envío del formulario
-      console.log('Formulario enviado');
+      const emailSubject = `${this.nombre} ${this.apellido} con correo ${this.correo} tiene la siguiente consulta: ${this.asunto}`;
+      const emailMessage = this.mensaje;
+      const toEmail = this.departamento === 'Desarrollo' ? 'alan.ibm1108@gmail.com' : 'edisonmauricio00@gmail.com';
+
+      const requestBody = {
+        to_email: toEmail,
+        email_subject: emailSubject,
+        email_message: emailMessage
+      };
+
+      fetch('https://sample-f5jz4k4tfa-ue.a.run.app/email/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('¡El correo se ha enviado correctamente!');
+          this.$router.push({
+          path: '/envioexitoso'
+          }
+        ); 
+          // Aquí puedes realizar alguna acción adicional si el correo se envió con éxito
+        } else {
+          console.error('Error al enviar el correo');
+          // Aquí puedes manejar el caso de error, por ejemplo, mostrar un mensaje al usuario
+        }
+      })
+      .catch(error => {
+        console.error('Error en la solicitud:', error);
+        // Aquí puedes manejar el error en caso de que la solicitud falle
+      });
     },
     onVerify(response) {
       // Verifica la respuesta de hCaptcha

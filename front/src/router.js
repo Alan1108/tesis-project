@@ -3,11 +3,13 @@ import Inicio from './views/PaginaInicio.vue';
 import Reconocimiento from './views/PaginaReconocimiento.vue';
 import Contacto from './views/PaginaContacto.vue';
 import Resultado from './views/PaginaResultado.vue';
+import EnvioExitoso from './views/EnvioExitoso.vue';
 
 const routes = [
   { path: '/', component: Inicio },
   { path: '/reconocimiento', component: Reconocimiento },
   { path: '/contacto', component: Contacto },
+  { path: '/envioexitoso', component: EnvioExitoso },
   { path: '/resultado', name: 'PaginaResultado', component: Resultado }
 ];
 
