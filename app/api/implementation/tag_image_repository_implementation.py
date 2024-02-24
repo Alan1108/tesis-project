@@ -1,7 +1,8 @@
 from api.repositories.tag_image_repository import ITagImageRepository
 from api.constants.constants import ClassColors
+from api.config.env_vars import Variables
 import cv2
-import os
+from uuid import uuid4
 import numpy as np
 import base64
 from http import HTTPStatus
@@ -19,9 +20,9 @@ class TagImageRepository(ITagImageRepository):
 
     def tag_image(self, image: UploadFile) -> tuple:
         try:
-            rf = Roboflow(api_key=os.environ.get("ROBO_API_KEY"))
-            project = rf.workspace(os.environ.get("ROBO_WORKSPACE"))\
-                .project(os.environ.get("ROBO_PROJECT_NAME"))
+            rf = Roboflow(api_key=Variables().ROBO_API_KEY)
+            project = rf.workspace(Variables().ROBO_WORKSPACE)\
+                .project(Variables().ROBO_PROJECT_NAME)
             model = project.version(4).model
             file_url = self._store_image(image)
 
@@ -32,7 +33,6 @@ class TagImageRepository(ITagImageRepository):
                 overlap=30
             ).json()
 
-            self._delete_image()
             cleaned_data = self._clean_data(
                 prediction_data=prediction_data["predictions"]
             )
@@ -49,30 +49,22 @@ class TagImageRepository(ITagImageRepository):
             )
 
     def _store_image(self, image: UploadFile) -> str:
+        blob_name = str(uuid4())
         bucket = self.storage_client.get_bucket(self.bucket_name)
-        blob = bucket.blob(self.blob_name)
+        blob = bucket.blob(blob_name)
         blob.upload_from_file(image.file)
         return blob.public_url
-
-    def _delete_image(self) -> None:
-        bucket = self.storage_client.get_bucket(self.bucket_name)
-        bucket.delete_blob(self.blob_name)
 
     def _draw_image(self, prediction_data, image: UploadFile) -> bytes:
         image.file.seek(0)
         content = image.file.read()
         nparr = np.fromstring(content, np.uint8)
         new_image_arr = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        previous_class = ""
-        color_count = 0
-        color = ()
-        previous_classes = []
         for bounding_box in prediction_data:
-            if previous_class != bounding_box["class"] and\
-                    bounding_box["class"] not in previous_classes:
-                color = ClassColors.COLORS[color_count]
-                color_count += 1
-
+            color = next((diccionario["BGR"]
+                          for diccionario in ClassColors.COLORS2
+                          if diccionario["class"] == bounding_box["class"]),
+                         None)
             x0 = bounding_box['x'] - bounding_box['width'] / 2
             x1 = bounding_box['x'] + bounding_box['width'] / 2
             y0 = bounding_box['y'] - bounding_box['height'] / 2
@@ -84,21 +76,10 @@ class TagImageRepository(ITagImageRepository):
                 new_image_arr,
                 start_point,
                 end_point,
-                color=(color[0]),
+                color=color,
                 thickness=3
             )
 
-            """ new_image_arr = cv2.putText(
-                new_image_arr,
-                bounding_box["class"],
-                (int(x0), int(y0) - 10),
-                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                fontScale=0.4,
-                color=(255, 255, 255),
-                thickness=1
-            ) """
-            previous_class = bounding_box["class"]
-            previous_classes.append(bounding_box["class"])
         img_encode = cv2.imencode(".jpg", new_image_arr)[1]
         return img_encode.tobytes()
 
@@ -111,13 +92,13 @@ class TagImageRepository(ITagImageRepository):
             class_count[class_name] += 1
         clean_data = []
         total_detections = len(prediction_data)
-        color_counter = 0
-        class_colors = ClassColors()
         for class_name, ocurrences in class_count.items():
             clean_data.append({
                 "class_name": class_name,
                 "percentage": str(round((ocurrences*100.0)/total_detections)),
-                "color": class_colors.COLORS[color_counter][1]
+                "color": next((class_item["color_name"]
+                              for class_item in ClassColors.COLORS2
+                              if class_item["class"] == class_name),
+                              None)
             })
-            color_counter += 1
         return clean_data
