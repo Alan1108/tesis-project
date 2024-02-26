@@ -12,6 +12,7 @@
         </div>
         <div class="etiqueta">
           <p v-if="!imageLoaded">Arrastra una imagen aquí o haz clic para cargarla.</p>
+          <p class="error-message" v-if="!notificacion">Por favor, selecciona una imagen antes de clasificarla.</p>
           <p v-else>{{ uploadedFileName }}</p>
         </div>
       </div>
@@ -29,7 +30,7 @@
         
         <router-link to="/familias"><button class="boton-parrafo"> <img src="../img/quimica.png" alt="+">Lista de Familias</button></router-link>
         <p>
-          Conoce las 26 familias de polínicos que el programa puede identificar.
+          Conoce las 9 familias de polínicos que el programa puede identificar.
         </p>
       </div>
     </div>
@@ -49,6 +50,7 @@ export default {
     return {
       imageLoaded: false,
       cargando: false,
+      notificacion:true,
       uploadedFileName: '',
       uploadedImage: '' // Almacena la URL de la imagen cargada
     };
@@ -69,6 +71,7 @@ export default {
     },
     handleImage(file) {
       this.imageLoaded = true;
+      this.notificacion=true;
       this.uploadedFileName = file.name;
       // Cargar la imagen como un objeto Blob
       const reader = new FileReader();
@@ -78,6 +81,10 @@ export default {
       reader.readAsDataURL(file);
     },
     async submitFile() {
+      if (!this.imageLoaded) {
+        this.notificacion = false;
+        return;
+      }
       this.cargando = true;
       try {
         const formData = new FormData();
@@ -136,11 +143,17 @@ export default {
 };
 </script>
 
-<style>
-/* Estilos adicionales si es necesario */
-</style>
 
-<style>
+
+<style scoped>
+.alert {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8d7da; /* Color de fondo */
+  color: #721c24; /* Color de texto */
+  margin-bottom: 10px; /* Espacio inferior */
+}
 .contenido {
   text-align: justify;
   display: flex;
@@ -223,5 +236,12 @@ export default {
 }
 .router-link-exact-active {
   text-decoration: none; /* Quitar subrayado de enlaces activos */
+}
+.error-message {
+  background-color: #f8d7da; /* Fondo rojo */
+  border: 1px solid #dc3545; /* Contorno rojo */
+  color: #721c24; /* Texto rojo oscuro */
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>

@@ -10,7 +10,7 @@
     </nav>
 
     <!-- Contenido de la página actual (determinado por la ruta) -->
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 

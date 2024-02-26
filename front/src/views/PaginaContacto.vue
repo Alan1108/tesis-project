@@ -3,6 +3,7 @@
     <!-- Contenido de la página de Contacto -->
     <div class="contenido">
       <!-- Columna izquierda -->
+      
       <table class="tabla-contacto">
         <tbody>
           <tr>
@@ -66,6 +67,10 @@
 
             <!-- Columna derecha -->
             <td class="columna-derecha">
+              
+              <p class="error-message" v-if="!notificacionerror">Error en el Servidor, su mensaje no fue enviado.</p>
+              
+              <p class="success-message" v-if="!notificacionenviado">Mensaje enviado con exito!</p> 
               <div class="titulo">
                 <img src="../img/pregunta.png" style="max-width: 40%;padding-bottom: 10px;">
                 <h1>¿Tienes algo que aportar?</h1>
@@ -87,6 +92,8 @@ export default {
   name: 'PaginaContacto',
   data() {
     return {
+      notificacionerror: true,
+      notificacionenviado: true,
       nombre: '',
       apellido: '',
       correo: '',
@@ -119,13 +126,11 @@ export default {
       .then(response => {
         if (response.ok) {
           console.log('¡El correo se ha enviado correctamente!');
-          this.$router.push({
-          path: '/envioexitoso'
-          }
-        ); 
+          this.notificacionenviado = false;
           // Aquí puedes realizar alguna acción adicional si el correo se envió con éxito
         } else {
           console.error('Error al enviar el correo');
+          this.notificacionerror=false;
           // Aquí puedes manejar el caso de error, por ejemplo, mostrar un mensaje al usuario
         }
       })
@@ -147,6 +152,7 @@ export default {
   },
   mounted() {
     // Carga el script de hCaptcha
+    this.captchaLoading = true;
     const script = document.createElement('script');
     script.src = 'https://hcaptcha.com/1/api.js';
     script.async = true;
@@ -260,6 +266,20 @@ input, textarea{
   border: 2px solid #15323a;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   border-radius: 15px;
+}
+.error-message {
+  background-color: #f8d7da; /* Fondo rojo */
+  border: 1px solid #dc3545; /* Contorno rojo */
+  color: #721c24; /* Texto rojo oscuro */
+  padding: 10px;
+  border-radius: 5px;
+}
+.success-message {
+  background-color: #d7f8da; /* Fondo rojo */
+  border: 1px solid #35dc6d; /* Contorno rojo */
+  color: #1c7227; /* Texto rojo oscuro */
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>
 
