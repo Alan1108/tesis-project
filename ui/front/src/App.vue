@@ -3,14 +3,14 @@
     <!-- Menú horizontal -->
     <nav class="menu">
       <ul>
-        <li><router-link to="/" class="menu-link">Inicio</router-link></li>
-        <li><router-link to="/reconocimiento" class="menu-link">Reconocimiento</router-link></li>
-        <li><router-link to="/contacto" class="menu-link">Contacto</router-link></li>
+        <li><router-link to="/" class="menu-link"><img src="./img/inicio.png">Inicio</router-link></li>
+        <li><router-link to="/reconocimiento" class="menu-link"><img src="./img/clasificar.png">Reconocimiento</router-link></li>
+        <li><router-link to="/contacto" class="menu-link"><img src="./img/contactos.png">Contacto</router-link></li>
       </ul>
     </nav>
 
     <!-- Contenido de la página actual (determinado por la ruta) -->
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
 <style>
 body{
   margin: 0;
-  background-color: #c69774;
+  color: #15323a;
   box-sizing: border-box; /* Asegura que el ancho y alto incluyan el padding y borde */
 }
 #app {
@@ -38,29 +38,46 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: #c69774;
+  background-color: #ffffff;
 }
 
 /* Estilos para el menú horizontal */
 .menu {
-  background-color: #637e76;
+  background-color: #15323a;
   padding: 3px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
 .menu ul {
-  list-style-type: none;
+  font-size: 18px;
+  align-items: center;
   padding: 0;
+}
+li:hover{
+  background-color: #2380a8;
 }
 
 .menu ul li {
+  vertical-align: middle;
   display: inline;
-  margin-right: 50px;
+  border-radius: 10px;
+  margin-right: 60px;
+  padding: 10px;
 }
 
 .menu-link {
+  vertical-align: middle;
   font-weight: bold;
   color: white;
   text-decoration: none; /* Para evitar subrayado en los enlaces */
+}
+p{
+  color: #15323a;
+}
+ul li img{
+  vertical-align: middle;
+  padding-right: 7px;
+  max-width: 25px;
+ 
 }
 </style>

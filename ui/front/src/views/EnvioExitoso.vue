@@ -2,10 +2,10 @@
     <div class="envio-exitoso">
       <div class="contenido">
         <div class="mensaje">
-          <h1>¡Tu mensaje se ha enviado con éxito!</h1>
+          <h2 style="font-size: 35px;">¡Tu mensaje se ha enviado con éxito!</h2>
         </div>
         <div class="imagen">
-          <img src="../img/visto.png" alt="Visto verde">
+          <img src="../img/visto.png" style="max-width: 90%;" alt="Visto verde">
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@
   
   <style scoped>
   .envio-exitoso {
-    background-color: #f8dfd4;
+    background-color: #ffffff;
     border-radius: 10px;
     padding: 20px;
   }
