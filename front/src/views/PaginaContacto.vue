@@ -19,7 +19,7 @@
                     <!-- Fila para Nombre -->
                     <tr>
                       <td><strong>Nombre*</strong></td>
-                      <td><input type="text" placeholder="Nombre" v-model="nombre" required></td>
+                      <td style="padding-right: 3%;"><input type="text" placeholder="Nombre" v-model="nombre" required></td>
                       <td><input type="text" placeholder="Apellido" v-model="apellido" required></td>
                     </tr>
                     <!-- Fila para Correo -->
@@ -67,9 +67,12 @@
             <!-- Columna derecha -->
             <td class="columna-derecha">
               <div class="titulo">
+                <img src="../img/pregunta.png" style="max-width: 40%;padding-bottom: 10px;">
                 <h1>¿Tienes algo que aportar?</h1>
-                <br><br><br><br><br>
+                <p>Comunícate con el departamento de Biotecnología para compartir tus ideas y contribuciones. </p>
+                
                 <h1>¿Necesitas ayuda con algo?</h1>
+                <p>Si necesitas asistencia técnica o tienes problemas con el sistema, ponte en contacto con el departamento de Desarrollo.</p>
               </div>
             </td>
           </tr>
@@ -196,9 +199,10 @@ h1{
 }
 
 button {
-  background-color: #637e76; /* Color de fondo del botón */
+  background-color: #15323a; /* Color de fondo del botón */
   color: white; /* Color del texto del botón */
   border: none; /* Sin borde */
+  font-size: 18px;
   border-radius: 5px; /* Borde redondeado */
   padding: 10px 20px; /* Espaciado interno del botón */
   
@@ -206,7 +210,7 @@ button {
 }
 
 button:hover {
-  background-color: #4e6359; /* Cambio de color al pasar el ratón */
+  background-color: #2380a8; /* Cambio de color al pasar el ratón */
 }
 
 .radio-options {
@@ -219,8 +223,9 @@ button:hover {
   align-items: center;
 }
 
+
 .titulo {
-  margin-top: 30px; /* Espacio superior para el título */
+  margin-top: 0px; /* Espacio superior para el título */
   text-align: center; /* Alinear al centro */
 }
 
@@ -236,14 +241,25 @@ button:hover {
 
 .tabla-contacto .columna-izquierda {
   width: 50%; /* Ocupa el 50% del ancho */
-  padding: 30px; /* Espaciado interno */
-  background-color: #f8dfd4; /* Color de fondo de la columna izquierda */
+  padding: 0px; /* Espaciado interno */
+  background-color: #cff1ff; /* Color de fondo de la columna izquierda */
 }
 
 .tabla-contacto .columna-derecha {
-  width: 50%; /* Ocupa el 50% del ancho */
-  padding: 10px; /* Espaciado interno */
-  background-color: #c69774; /* Color de fondo de la columna derecha */
+  width: 45%; /* Ocupa el 50% del ancho */
+  padding: 0px; /* Espaciado interno */
+  background-color: #ffffff; /* Color de fondo de la columna derecha */
+}
+.columna-derecha h1{
+  font-size: 34px;
+}
+.columna-derecha p{
+  font-size: 20px;
+}
+input, textarea{
+  border: 2px solid #15323a;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
 }
 </style>
 

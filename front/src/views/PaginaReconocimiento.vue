@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="contenido">
     <div class="fila">
@@ -20,38 +18,37 @@
     </div>
     <div class="fila">
       <div class="parrafo">
-        <button class="boton-parrafo" @click="submitFile()">Clasificar Imagen</button>
-        <p><strong>Información del Proyecto</strong></p>
+        <button class="boton-parrafo" @click="submitFile()"><img src="../img/clasificar.png" alt="+">Clasificar Imagen</button>
         <p>
-          Nuestra plataforma interactiva se enfoca en el análisis de imágenes de polen para detectar familias.
-          Es una herramienta innovadora diseñada en colaboración entre estudiantes de software de la Universidad
-          de las Fuerzas Armadas ESPE y la carrera de biotecnología. Su objetivo es proporcionar una solución
-          eficaz para el análisis de imágenes de polen, con aplicaciones importantes en la investigación científica
-          y la biotecnología.
+          Sube la imagen en los formatos admitidos para que el programa analice e identifique las familias encontradas
+          , la imagen subida va a ser almacenada para mejorar el entrenamiento del modelo neuronal para futuras
+          actualizaciones.
         </p>
       </div>
       <div class="parrafo">
-        <button class="boton-parrafo">Mostrar Contenido</button>
-        <p><strong>Involucrados del Proyecto</strong></p>
+        
+        <router-link to="/familias"><button class="boton-parrafo"> <img src="../img/quimica.png" alt="+">Lista de Familias</button></router-link>
         <p>
-          Este proyecto ha sido posible gracias a la colaboración entre estudiantes de software de la Universidad de
-          las Fuerzas Armadas ESPE y la carrera de biotecnología. Juntos, hemos trabajado para desarrollar una plataforma
-          que aborde las necesidades específicas de la investigación en biotecnología, con el objetivo de mejorar la
-          eficiencia y precisión en el análisis de imágenes de polen.
+          Conoce las 26 familias de polínicos que el programa puede identificar.
         </p>
       </div>
     </div>
+    <ModalCargando :cargando="cargando" />
   </div>
 </template>
 
 <script>
 //import axios from 'axios';
-
+import ModalCargando from './ModalCargando.vue';
 export default {
   name: 'PaginaReconocimiento',
+  components:{
+    ModalCargando
+  },
   data() {
     return {
       imageLoaded: false,
+      cargando: false,
       uploadedFileName: '',
       uploadedImage: '' // Almacena la URL de la imagen cargada
     };
@@ -81,6 +78,7 @@ export default {
       reader.readAsDataURL(file);
     },
     async submitFile() {
+      this.cargando = true;
       try {
         const formData = new FormData();
         formData.append('image', this.$refs.fileInput.files[0]);
@@ -130,6 +128,8 @@ export default {
         
       } catch (error) {
         console.error('Error al clasificar la imagen:', error);
+      } finally {
+        this.cargando = false; // Ocultar el modal de carga
       }
     }
   }
@@ -158,11 +158,11 @@ export default {
   margin: 40px;
   margin-bottom: 0px;
   padding: 20px;
-  background-color: #ffefe8;
+  background-color: #cff1ff;
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
-  border: 5px dashed #637e76;
+  border: 5px dashed #15323a;
 }
 
 
@@ -176,20 +176,24 @@ export default {
 }
 
 .boton-parrafo {
-  background-color: #637e76;
+  background-color: #15323a;
   color: white;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   margin-bottom: 10px;
   cursor: pointer;
-  width: 60%;
+  width: 100%;
   font-size: 32px;
-  margin-left:20px;
+  text-decoration: none;
+}
+.boton-parrafo img{
+  max-width: 5%;
+  padding-right: 5%;
 }
 
 .boton-parrafo:hover {
-  background-color: #4e6359;
+  background-color: #2380a8;
 }
 .upload-icon, .image-preview {
   position: relative;
@@ -201,8 +205,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0; /* Color de fondo del contenedor */
-  border: 1px dashed #ccc; /* Borde punteado */
+  background-color: #ffff; /* Color de fondo del contenedor */
+  border: 1px dashed #2380a8; /* Borde punteado */
   border-radius: 5px; /* Borde redondeado */
 }
 
@@ -216,5 +220,8 @@ export default {
 .upload-icon img {
   width: 200px; /* Ajusta el tamaño del icono según sea necesario */
   height: 200px; /* Ajusta el tamaño del icono según sea necesario */
+}
+.router-link-exact-active {
+  text-decoration: none; /* Quitar subrayado de enlaces activos */
 }
 </style>
