@@ -4,11 +4,9 @@
     <div class="contenido">
       <!-- Columna izquierda -->
       
-      <table class="tabla-contacto">
-        <tbody>
-          <tr>
+      <div class="tabla-contacto">
             <!-- Columna izquierda -->
-            <td class="columna-izquierda">
+            <div class="columna-izquierda">
               <div v-if="captchaLoading">Cargando Captcha...</div>
               <div v-else>
               <!-- Contenido de la columna izquierda -->
@@ -39,13 +37,14 @@
                       <td colspan="2"><textarea placeholder="Mensaje" v-model="mensaje" rows="4" required></textarea></td>
                     </tr>
                     <!-- Fila para Captcha -->
-                    <tr>
+                    <tr class="captcha">
                       <td><strong>Verificación*</strong></td>
                       <td colspan="2">
                         <div
                           class="h-captcha"
                           data-sitekey="ce6cb88f-3f12-4cdf-98a1-ea9eaf406c2b"
                           @verify="onVerify"
+                          style="max-width: 10px;"
                         ></div>
                       </td>
                     </tr>                                      
@@ -63,10 +62,10 @@
   
               </form>
             </div>
-            </td>
+          </div>
 
             <!-- Columna derecha -->
-            <td class="columna-derecha">
+            <div class="columna-derecha" >
               
               <p class="error-message" v-if="!notificacionerror">Error en el Servidor, su mensaje no fue enviado.</p>
               
@@ -79,10 +78,8 @@
                 <h1>¿Necesitas ayuda con algo?</h1>
                 <p>Si necesitas asistencia técnica o tienes problemas con el sistema, ponte en contacto con el departamento de Desarrollo.</p>
               </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
     </div>
   </div>
 </template>
@@ -170,7 +167,7 @@ export default {
 <style>
 .contenido {
   display: flex; /* Usa flexbox para distribuir los elementos */
-  height: calc(100vh - 50px); /* Ajusta la altura para que quepa el menú horizontal */
+  flex-direction: column;
 }
 
 
@@ -236,24 +233,24 @@ button:hover {
 }
 
 .titulo h1 {
-  margin: 0;
+  margin: 10;
 }
 
 .tabla-contacto {
-  width: 100%; /* Ocupa todo el ancho disponible */
-  border-collapse: collapse; /* Fusionar bordes de celda */
+  display: flex;
   text-align:center;
+  flex-direction: row;
 }
 
-.tabla-contacto .columna-izquierda {
+.columna-izquierda {
   width: 50%; /* Ocupa el 50% del ancho */
-  padding: 0px; /* Espaciado interno */
+  padding: 10px; /* Espaciado interno */
   background-color: #cff1ff; /* Color de fondo de la columna izquierda */
 }
 
-.tabla-contacto .columna-derecha {
-  width: 45%; /* Ocupa el 50% del ancho */
-  padding: 0px; /* Espaciado interno */
+.columna-derecha {
+  width: 50%; /* Ocupa el 50% del ancho */
+  padding: 5%; /* Espaciado interno */
   background-color: #ffffff; /* Color de fondo de la columna derecha */
 }
 .columna-derecha h1{
@@ -281,6 +278,33 @@ input, textarea{
   padding: 10px;
   border-radius: 5px;
 }
+@media only screen and (max-width: 768px) {
+    .tabla-contacto {
+      display: flex;
+      flex-direction: column;
+    }
+    .captcha{
+      display: flex;
+      flex-direction: column;
+      padding-left: 10%;
+    }
+    .columna-izquierda{
+      width: 100%;
+      padding: 0px;
+    }
+    .columna-derecha{
+      width: 100%;
+      padding-top: 10px;
+      
+    }
+    .columna-derecha h1{
+  font-size: 20px;padding-right: 7%;
+}
+.columna-derecha p{
+  font-size: 18px;padding-right: 7%;
+  
+}
+  }
 </style>
 
   

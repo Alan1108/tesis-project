@@ -233,5 +233,35 @@
 .botonpaginado img{
     max-width: 10%;
 }
+@media screen and (max-width: 768px) {
+    .tabla-familias th:nth-child(1),
+    .tabla-familias td:nth-child(1),
+    .tabla-familias th:nth-child(5),
+    .tabla-familias td:nth-child(5) {
+        display: none;
+    }
+    .tabla-familias th:nth-child(2),
+    .tabla-familias td:nth-child(2) {
+        width: 5%;
+        font-size: 12px;
+    }
+    .tabla-familias th:nth-child(3),
+    .tabla-familias td:nth-child(3) {
+        width: 10%;
+        font-size: 12px;
+    }
+    .tabla-familias th:nth-child(4),
+    .tabla-familias td:nth-child(4) {
+        width: 50%;
+    }
+    .paginacion {
+  padding: 10px;
+  display: flex;
+}
+.paginacion button {
+  margin-right: 10px;
+  padding: 10px;
+}
+}
   </style>
   

@@ -80,4 +80,18 @@ ul li img{
   max-width: 25px;
  
 }
+
+@media only screen and (max-width: 600px) {
+    /* Estilos para dispositivos con ancho máximo de 600px (como dispositivos móviles) */
+    .menu ul li {
+  vertical-align: middle;
+  display: block;
+  border-radius: 10px;
+  margin-right: 20px; 
+  padding: 7px;
+    }
+    .menu{
+      padding: 1px;
+    }
+  }
 </style>

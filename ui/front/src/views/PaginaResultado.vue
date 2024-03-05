@@ -6,13 +6,11 @@ import { withDirectives } from 'vue';
     <div>
         <h1 style="text-align: center;">Resultado del Análisis</h1>
 
-        <div style="display: flex;padding-left:5%;padding-right:5%;border-radius: 15px;" >
-            <table >
-                <tr >
-                    <td>
+        <div class="resultado" >
+            
+                    <div>
                         <img :src="blobUrl" alt="Imagen de resultado" style="max-width: 500px; max-height: 500px;border: 4px solid #15323a;border-radius: 5px;box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);">
-                    </td>
-                    <td>
+                    </div>
                         <div class="box">
                             <template v-if="predictionData && predictionData.length > 0">
                                 <h2>Datos de Predicción:</h2>
@@ -42,9 +40,7 @@ import { withDirectives } from 'vue';
                             <button @click="loadAnotherImage"><img src="../img/imagen.png">Cargar otra imagen</button>
                           </div>
                         </div>
-                    </td>
-                </tr>
-            </table>
+                
         </div>
     </div>
 </template>
@@ -90,6 +86,16 @@ table {
   width: 100%;
   
 }
+.resultado{
+  align-items: center;
+  display: inline-flex;
+  flex-direction: row;
+  padding-left:5%;
+  padding-right:5%;
+  border-radius: 15px;
+}
+
+
 
 .general{
     border: 1px solid #2380a8;
@@ -127,8 +133,17 @@ button img{
 }
 .box{
   border: 2px solid #2380a8;
+  margin-left: 5%;
   border-radius: 15px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
   padding: 5%;
+}
+@media screen and (max-width: 768px) {
+  .resultado{
+  align-items: center;
+  display: block;
+  flex-direction: row;
+  border-radius: 15px;
+}
 }
 </style>

@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="fila">
+    <div class="fila2"  >
       <div class="parrafo">
         <button class="boton-parrafo" @click="submitFile()"><img src="../img/clasificar.png" alt="+">Clasificar Imagen</button>
         <p>
@@ -160,6 +160,10 @@ export default {
   flex-direction: column;
 }
 
+.fila2 {
+  display: flex;
+  flex-direction: row;
+}
 .fila {
   display: flex;
   flex-direction: row;
@@ -244,4 +248,18 @@ export default {
   padding: 10px;
   border-radius: 5px;
 }
+
+@media only screen and (max-width: 600px) {
+    /* Estilos para dispositivos con ancho máximo de 600px (como dispositivos móviles) */
+    .boton-parrafo img{
+      max-width: 10%;
+    }
+    .boton-parrafo{
+      font-size: 22px;
+    }
+    .fila2 {
+    display: flex; /* Usa flexbox para distribuir los elementos */
+    flex-direction: column; /* Alinear los elementos en filas */
+    }
+  }
 </style>
